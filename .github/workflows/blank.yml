@@ -1,14 +1,10 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Debugging with SSH
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the main branch
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: push
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -24,7 +20,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Start SSH via ngrok
-        uses: P3TERX/ssh2actions@main
+        uses: LittleRainbow2021/ssh2actions@main
         with:
           mode: ngrok
         env:
@@ -47,4 +43,4 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Don't kill instace
         if: ${{ failure() }}
-        run: sleep 1h # Prevent to killing instance after failure
+        run: sleep 5m # Prevent to killing instance after failure
