@@ -20,7 +20,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Start SSH via ngrok
-        uses: LittleRainbow2021/ssh2actions@main
+        uses: P3TERX/ssh2actions@main
         with:
           mode: ngrok
         env:
