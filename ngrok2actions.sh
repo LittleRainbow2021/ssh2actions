@@ -63,6 +63,12 @@ if [[ -n "${SSH_PASSWORD}" ]]; then
     echo -e "${SSH_PASSWORD}\n${SSH_PASSWORD}" | sudo passwd "${USER}"
 fi
 
+echo -e "${INFO} Start ngrok proxy for VNC port..."
+screen -dmS vnc \
+    ngrok tcp 5900 \
+    --authtoken "${NGROK_TOKEN}" \
+    --region "${NGROK_REGION:-us}"
+
 echo -e "${INFO} Start ngrok proxy for SSH port..."
 screen -dmS ngrok \
     ngrok tcp 22 \
@@ -82,10 +88,8 @@ if [[ -e "${LOG_FILE}" && -z "${ERRORS_LOG}" ]]; then
     SSH_CMD="$(grep -oE "tcp://(.+)" ${LOG_FILE} | sed "s/tcp:\/\//ssh ${USER}@/" | sed "s/:/ -p /")"
     MSG="
 *GitHub Actions - ngrok session info:*
-
 ⚡ *CLI:*
 \`${SSH_CMD}\`
-
 🔔 *TIPS:*
 Run '\`touch ${CONTINUE_FILE}\`' to continue to the next step.
 "
